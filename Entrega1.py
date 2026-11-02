@@ -153,6 +153,10 @@ def filtrar(lista):
         Retorna:
             None
         """
+
+    if len(lista) == 0:
+        print("Primero debe generar los valores.")
+        return
     
     letrasValidas = ["M", "m", "E", "e", "R", "r", "P", "p", "I", "i"]
     listaFiltrada = []
@@ -354,6 +358,11 @@ def desdoblamiento(lista):
     Retorno:
         None
     """
+
+    if len(lista) == 0:
+        print("Primero debe generar los valores.")
+        return
+    
     letrasValidas = ["P", "p", "C", "c", "U", "u"] 
     
     criterio = input("Ingrese el criterio de desdoblamiento [P=Pares/Impares | C=Por cantidad de cifras | U=Por valor umbral]: ")
