@@ -46,6 +46,12 @@ def mostrar_valores(lista, titulo):
         - No retorna valores.
     """
     
+    listaVacia = verificacionListaVacia(lista)
+    
+    if listaVacia:
+        print("Primero debe generar los valores.")
+        return
+    
     separadorAsterisco()
     print(titulo)
     separadorAsterisco()
@@ -70,6 +76,12 @@ def mostrar_valores(lista, titulo):
 
     print()
     separadorAsterisco()
+
+def verificacionListaVacia(lista):
+    listaVacia = True
+    if len(lista) > 0:
+        listaVacia = False
+    return listaVacia
 
     
 def eliminar_repetidos(lista):
@@ -120,7 +132,10 @@ def punto_3(lista):
     Retorno:
         - No retorna ningún valor.
     """
-    if len(lista) == 0:
+    
+    listaVacia = verificacionListaVacia
+    
+    if listaVacia:
         print("Primero debe generar los valores.")
         return
 
@@ -144,14 +159,16 @@ def generarNumeros(lista):
     
     """
     
-    if len(lista) > 0:
+    listaVacia = verificacionListaVacia(lista)
+    
+    if not listaVacia:
         entradaCorrecta = False
         while not entradaCorrecta:
-            respuesta = input("Lista detectada ¿desea remplazarla? (si = 1) (no = 0) ")
-            if respuesta == "1": 
+            respuesta = input("Lista detectada ¿desea remplazarla? (S/N) ")
+            if respuesta == "S" or respuesta == "s": 
                 lista.clear()
                 entradaCorrecta = True
-            elif respuesta == "0":
+            elif respuesta == "N" or respuesta == "n":
                 return lista
             else:
                 print("Introduciste un valor erroneo.")
@@ -172,7 +189,6 @@ def generarNumeros(lista):
     for i in range(0, cantidad):
         numero = random.randint(0, 99999)
         lista.append(numero)
-    print (lista)
 
     return lista
         
@@ -187,7 +203,9 @@ def valoresTopN(lista):
         Ninguno.
     """
 
-    if len(lista) == 0:
+    listaVacia = verificacionListaVacia(lista)
+    
+    if listaVacia:
         print("Primero debe generar los valores.")
         return
     entradaValida = False
@@ -247,16 +265,12 @@ def validacionLetra(letrasValidas, caracter):
     Retorno:
         bool: True si el carácter es válido, False en caso contrario.
     """
-    bucle = True
     validacion = False
-    while bucle:
-        if caracter not in letrasValidas:
-            print("Caracter ingresado invalido.")
-            bucle = False
-            validacion = False
-        else:
-            bucle = False
-            validacion = True
+    if caracter not in letrasValidas:
+        print("Caracter ingresado invalido.")
+        validacion = False
+    else:
+        validacion = True
     return validacion
 
 def pedir_numero(mensaje, minimo, maximo):
@@ -279,6 +293,8 @@ def pedir_numero(mensaje, minimo, maximo):
                 return numero
             else:
                 print("Error: el valor debe estar entre ", minimo, " y ", maximo)
+        else:
+            print("Error: ingrese un numero, no un texto")
 
     # ------- FILTRADO ---------
 
@@ -294,7 +310,9 @@ def filtrar(lista):
             None
         """
 
-    if len(lista) == 0:
+    listaVacia = verificacionListaVacia(lista)
+    
+    if listaVacia:
         print("Primero debe generar los valores.")
         return
     
@@ -325,7 +343,10 @@ def filtrar(lista):
         else:
             listaFiltrada = numerosImpar(lista)
             
-    mostrar_valores(listaFiltrada, "VALORES DEL JUEGO DE DATOS (DATOS FILTRADOS)")
+    if len(listaFiltrada) > 0:
+        mostrar_valores(listaFiltrada, "VALORES DEL JUEGO DE DATOS (DATOS FILTRADOS)")
+    else:
+        print("No hay valores para mostrar")
             
 def criterioMayor(lista):
     
@@ -515,7 +536,9 @@ def desdoblamiento(lista):
         None
     """
 
-    if len(lista) == 0:
+    listaVacia = verificacionListaVacia(lista)
+    
+    if listaVacia:
         print("Primero debe generar los valores.")
         return
     
@@ -529,17 +552,16 @@ def desdoblamiento(lista):
             valorErroneo = True
     
     if validacion:
-            if (criterio == "P" or criterio == "p"):
-                listaPares = numerosPar(lista)
-                listaImpares = numerosImpar(lista)
-                mostrar_valores(listaPares, "VALORES DEL JUEGO DE DATOS (DATOS DESDOBLADOS)")
-                mostrar_valores(listaImpares, "VALORES DEL JUEGO DE DATOS (DATOS DESDOBLADOS)")
-            
-            elif criterio == "C" or criterio == "c":
-                criterioCantCifras(lista)
-
-            else:
-                criterioPorValor(lista)
+        if (criterio == "P" or criterio == "p"):
+            listaPares = numerosPar(lista)
+            listaImpares = numerosImpar(lista)
+            mostrar_valores(listaPares, "VALORES DEL JUEGO DE DATOS (DATOS DESDOBLADOS)")
+            mostrar_valores(listaImpares, "VALORES DEL JUEGO DE DATOS (DATOS DESDOBLADOS)")
+        
+        elif criterio == "C" or criterio == "c":
+            criterioCantCifras(lista)
+        else:
+            criterioPorValor(lista)
 
 def valoresMaximosMinimos(lista):
     """
@@ -554,7 +576,9 @@ def valoresMaximosMinimos(lista):
         None.
     """
     
-    if len(lista) == 0:
+    listaVacia = verificacionListaVacia(lista)
+    
+    if listaVacia:
         print("Primero debe generar los valores.")
         return
 
@@ -568,12 +592,7 @@ def valoresMaximosMinimos(lista):
         if numero < minimo:
             minimo = numero
     
-    separadorAsterisco()
-    print("VALORES DEL JUEGO DE DATOS (DATOS MÁXIMOS Y MÍNIMOS [máx] (mín) <máx/mín>)")
-    separadorAsterisco()
-    print("A\tB\tC\tD\tE\tF\tG\tH\tI\tJ")
-    print("=======\t=======\t=======\t=======\t=======\t=======\t=======\t=======\t=======\t=======")
-    print()
+    mostrar_valores(listaNueva, "VALORES DEL JUEGO DE DATOS (DATOS MÁXIMOS Y MÍNIMOS [máx] (mín) <máx/mín>)")
 
     cantidadenfila = 0
     for numero in lista:
@@ -599,23 +618,15 @@ def valoresMaximosMinimos(lista):
 # CUERPO PRINCIPAL
 #----------------------------------------------------------------------------------------------
 def main():
-    """
-    Función principal del programa.
-    Inicializa la lista de números y ejecuta el menú principal,
-    permitiendo al usuario seleccionar las distintas operaciones
-    disponibles hasta que decida salir.
-
-    Parámetros:
-        Ninguno.
-
-    Retorno:
-        None.
-    """
-    
-    numeros = []
+    #-------------------------------------------------
+    # Inicialización de variables
+    #----------------------------------------------------------------------------------------------
     lista = []
-    
-    
+
+
+    #-------------------------------------------------
+    # Bloque de menú
+    #----------------------------------------------------------------------------------------------
     while True:
         while True:
             opciones = 7	
@@ -648,10 +659,7 @@ def main():
         elif opcion == "1":   # Opción 1
             generarNumeros(lista)
         elif opcion == "2":   # Opción 2
-            if len(lista) == 0:
-                print("Primero debe generar los valores.")
-            else:
-                mostrar_valores(lista, "VALORES DEL JUEGO DE DATOS (TODOS LOS DATOS)")
+            mostrar_valores(lista, "VALORES DEL JUEGO DE DATOS (TODOS LOS DATOS)")
         elif opcion == "3":   # Opción 3
             punto_3(lista)
         elif opcion == "4":   # Opción 4
